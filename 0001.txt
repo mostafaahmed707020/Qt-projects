@@ -1,0 +1,80 @@
+main.cpp:
+#include <QApplication>
+#include <QWidget>
+
+int main(int argc, char* argv[])
+{
+	QApplication app(argc,argv);
+
+	QWidget* widget = new QWidget();
+	widget->setWindowTitle("Hello Qt visual C++");
+	widget->setGeometry(10,10,2000,1080);
+	widget->show();
+
+	return app.exec();
+}
+
+CMakeLists.txt:
+cmake_minimum_required(VERSION 4.1.1)
+
+project ("01_QtSetup")
+
+# list the header files
+set(HEADER_FILES
+
+)
+
+# list the source files
+set(SOURCE_FILES
+	main.cpp
+)
+
+
+# link with qt6
+find_package(Qt6Core    CONFIG REQUIRED)
+find_package(Qt6Widgets CONFIG REQUIRED)
+find_package(Qt6Gui     CONFIG REQUIRED)
+
+
+# add library target
+qt_add_executable(01_QtSetup
+	${HEADER_FILES}
+	${SOURCE_FILES}
+	${HEADER_MOC}
+	${RCC_SOURCES}
+)
+
+set(QT_LIBS
+	Qt6::Core
+	Qt6::Gui
+	Qt6::Widgets
+)
+
+target_link_libraries(01_QtSetup
+	PUBLIC
+		${QT_LIBS}
+)
+
+# Windows specfic flags to enable W variations of winapi
+# Windows specific flags
+if(WIN32)
+    target_compile_definitions(01_QtSetup PRIVATE OS_WINDOWS=1)
+
+    if (MSVC)
+        target_compile_options(01_QtSetup PRIVATE /WX)  # warnings as errors for MSVC
+    else()
+        target_compile_options(01_QtSetup PRIVATE -Werror)  # warnings as errors for GCC/Clang
+    endif()
+endif()
+# enable C++17
+# disable any compiler specifc extensions
+target_compile_features(01_QtSetup PUBLIC cxx_std_17)
+set_target_properties(01_QtSetup PROPERTIES
+	CXX_EXTENSIONS OFF
+)
+
+pwsh: cmake -S "D:\QT projects\Qt-projects" -B "D:\QT projects\Qt-projects\build" -G "Ninja" 
+            -DCMAKE_CXX_COMPILER=C:\msys64\mingw64\bin\g++.exe 
+            -DCMAKE_C_COMPILER=C:\msys64\mingw64\bin\gcc.exe
+      cmake --build "D:\QT projects\Qt-projects\build"
+
