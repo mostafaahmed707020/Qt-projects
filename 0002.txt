@@ -1,0 +1,23 @@
+#include <QApplication>
+#include <QWidget>
+#include <qLabel>
+int main(int argc, char* argv[])
+{
+	QApplication app(argc,argv);
+
+	QWidget* widget = new QWidget();
+	widget->setWindowTitle("Hello Qt visual C++");
+	widget->setGeometry(100,100,500,500);
+	
+	QLabel* name_label = new QLabel("Name",widget);
+	name_label->move(100,100);
+
+	QFont font("Arial",20,QFont::Bold);
+	name_label->setFont(font);
+	name_label->setStyleSheet("color:red");
+	name_label->setText(u8"الاسم");
+
+	widget->show();
+	return app.exec();
+}
+
