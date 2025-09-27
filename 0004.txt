@@ -1,0 +1,54 @@
+#include <QApplication>
+#include <QWidget>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QPushButton>
+
+class Window : public QWidget
+{
+	public:
+		Window(QWidget* parent = nullptr) : QWidget(parent)
+		{
+			setFixedSize(500,250);
+			
+			name = new QLabel("Name",this);
+			name ->move(100,150);
+			name ->setStyleSheet("color:red;");
+
+			name_edit = new QLineEdit(this);
+			name_edit ->move(138,148); 
+			name_edit ->setStyleSheet("background:red; font:bold 15px; color:white;");
+			
+			button = new QPushButton("Hello button",this);
+			button ->move(138,173);
+		
+			connect(name_edit,&QLineEdit::returnPressed,this,&Window::enterPressed);
+			connect(button,&QPushButton::clicked,this,&Window::buttonPressed);	
+		}
+
+		void enterPressed()
+		{
+			QMessageBox msg;
+			msg.setText(name_edit->text());
+			msg.exec();
+		}
+		void buttonPressed()
+		{
+			QMessageBox msg2;
+			msg2.setText(name_edit->text());
+			msg2.exec();
+		}
+	private:
+		QLabel* name;
+		QLineEdit* name_edit;
+		QPushButton* button;
+};
+int main(int argc, char* argv[]){
+	QApplication app(argc,argv);
+
+	Window window;
+	window.show();
+	
+	return app.exec();
+}
