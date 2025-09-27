@@ -1,0 +1,96 @@
+
+#include <QApplication>
+#include <QWidget>
+
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+
+class Window : public QWidget
+{
+	public:
+		Window(QWidget* parent = nullptr) : QWidget(parent)
+		{
+			setWindowTitle("Login");
+			setFixedSize(300,200);
+			
+			main_layout = new QVBoxLayout();
+			setLayout(main_layout);
+//------------------------------------------------------------------------------
+			//Row 2		
+			row1_layout = new QHBoxLayout();
+			row1_layout -> setSpacing(20);
+			main_layout->addLayout(row1_layout);
+			username_label=new QLabel("UserName: ");
+			username_box = new QLineEdit();
+			row1_layout->addWidget(username_label);
+			row1_layout->addWidget(username_box);
+//------------------------------------------------------------------------------
+			//Row 2			
+			row2_layout = new QHBoxLayout();
+			row2_layout -> setSpacing(24);
+			main_layout->addLayout(row2_layout);
+			password_label = new QLabel("Password: ");
+			row2_layout->addWidget(password_label);
+			password_box = new QLineEdit();
+			password_box->setEchoMode(QLineEdit::EchoMode::Password);
+			row2_layout->addWidget(password_box);
+//------------------------------------------------------------------------------
+			//Row 3
+		 	row3_layout = new QHBoxLayout();
+			row3_layout-> addStretch();
+			main_layout->addLayout(row3_layout);
+			login_button = new QPushButton("Login");
+			cancel_button = new QPushButton("Cancel");	 
+			row3_layout->addWidget(login_button);
+			row3_layout->addWidget(cancel_button);
+	
+//------------------------------------------------------------------------------			
+			//Connections
+			connect(login_button,QPushButton::clicked,this,&Window::login_button_pressed);
+			connect(cancel_button,QPushButton::clicked,this,&Window::cancel_button_pressed);
+			connect(login_button,QPushButton::clicked,this,&Window::find_password);
+		}
+		void login_button_pressed(){
+			
+			printf("Logged in %s\n",username_box->text().toStdString().c_str());
+
+		}
+		void cancel_button_pressed(){
+			printf("%s canceled\n",username_box->text().toStdString().c_str());
+		}
+
+		void find_password(){
+			std::string pass = password_box->text().toStdString().c_str();
+			
+			printf("the password is: %s\n",pass.c_str());
+		}
+
+	private:
+	
+	QVBoxLayout* main_layout;
+	QHBoxLayout* row1_layout;	
+	QHBoxLayout* row2_layout;	
+	QHBoxLayout* row3_layout;
+	
+	QLabel* username_label;
+	QLabel* password_label;
+
+	QLineEdit* username_box;
+	QLineEdit* password_box;
+
+	QPushButton* login_button;
+	QPushButton* cancel_button;
+
+};
+int main(int argc, char* argv[]){
+	QApplication app(argc,argv);
+
+	Window window;
+	window.show();
+	
+	return app.exec();
+}
