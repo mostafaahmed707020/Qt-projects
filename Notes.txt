@@ -30,4 +30,21 @@ widget → the parent widget (so the label will appear inside that parent).
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 Why there is a Debug Directory?
-when building a p
+In C++ projects, especially when using build systems like Visual Studio, CMake, or Makefiles, a folder named Debug/ is created to hold the compiled output of your project in debug mode.
+Build Type	Purpose	Folder
+Debug	For development: includes extra info to help with debugging	Debug/
+Release	For final distribution: optimized for speed and size	Release/
+
+🔍 What’s Inside the Debug/ Directory?
+Typically:
+The compiled executable (e.g., myapp.exe)
+The object files (.obj or .o) — one for each .cpp file
+PDB files (.pdb = Program Database) → contains symbols and debug info
+Other intermediate build files
+
+🛠 What’s Different About a “Debug Build”?
+Debug builds:
+Include symbol information for variables and functions
+Disable optimizations to make the code easier to step through
+Allow stepping through code line-by-line in a debugger
+Are larger and slower than release builds
