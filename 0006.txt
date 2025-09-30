@@ -1,0 +1,83 @@
+#include <QApplication>
+#include <QWidget>
+
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QTextEdit>
+
+
+class Window : public QWidget
+{
+	public : 
+		Window(QWidget* parent = nullptr) : QWidget(parent)
+	{
+		setWindowTitle("Login");
+//		setFixedSize(300,200);
+		setGeometry(250,250,500,500);
+	
+		name_label = new QLabel("Name: ");
+		password_label = new QLabel("Password: ");
+		
+		name_edit = new QLineEdit();
+		password_edit = new QLineEdit();
+		
+	
+	//=====================================
+	//Main layout
+		main_layout = new QVBoxLayout();
+		setLayout(main_layout);
+		
+	//=====================================
+	
+	grid_group_box = new QGroupBox();
+	grid_group_box->setTitle("Login Form");
+	grid_layout = new QGridLayout();
+	grid_group_box->setLayout(grid_layout);
+	main_layout->addWidget(grid_group_box);
+	grid_text_edit = new QTextEdit();
+
+	grid_layout->addWidget(name_label,0,0);
+	grid_layout->addWidget(name_edit,0,1);
+	grid_layout->addWidget(password_label,2,0);
+	grid_layout->addWidget(password_edit,2,1);
+	grid_layout->addWidget(grid_text_edit,0,2,3,1);
+	//=====================================
+	grid_group_box2 = new QGroupBox();
+	grid_group_box2->setTitle("Form");
+	grid_group_box2->setLayout(grid_layout);
+	main_layout->addWidget(grid_group_box2);
+	//=====================================
+		
+
+}
+	private:
+	QVBoxLayout* main_layout;
+	
+	QGridLayout* grid_layout;
+	QGroupBox* grid_group_box;
+	QGroupBox* grid_group_box2;
+	QTextEdit* grid_text_edit;
+	
+	QLabel* name_label;
+	QLabel* password_label;
+	
+	QLineEdit* name_edit;
+	QLineEdit* password_edit;
+
+	QPushButton* login_button;
+	QPushButton* cancel_button;
+
+};
+
+int main(int argc, char* argv[]){
+	QApplication application(argc,argv);
+	Window window;
+	window.show();
+	return application.exec();
+}
